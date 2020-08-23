@@ -1,24 +1,25 @@
-FROM debian:stable-slim AS xinetd
+FROM alpine:3.12 AS builder
 
-# s6-overlay configuration
-ENV S6_KEEP_ENV=1
-ENV S6_KILL_GRACETIME=6000
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+ARG XINETD_VERSION="2.3.15.4"
+ARG XINETD_RELEASE_DL="https://github.com/openSUSE/xinetd/releases/download/${XINETD_VERSION}/xinetd-${XINETD_VERSION}.tar.xz"
+WORKDIR "/tmp/xinetd/src"
 
-# Build and some of image configuration
-ARG S6_OVERLAY_RELEASE=https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-amd64.tar.gz
-ENV S6_OVERLAY_RELEASE=${S6_OVERLAY_RELEASE}
+RUN mkdir /build -p \
+    && wget -O ../xinetd.tar.xz "${XINETD_RELEASE_DL}" \
+    && cd ../ && tar xf xinetd.tar.xz  --strip 1 --directory src \
+    && cd src \
+    && apk add --update --no-cache alpine-sdk autoconf automake \
+    && aclocal \
+    && automake \
+    && ./configure --prefix /build \
+    && make \
+    && make install
 
+FROM nlss/base-alpine:3.12 AS xinetd
 
-ADD ${S6_OVERLAY_RELEASE} /tmp/s6overlay.tar.gz
-RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive \
-       apt install xinetd tcpd --yes  --no-install-recommends \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/ \
-    && tar xzf /tmp/s6overlay.tar.gz -C /
-
+COPY --from=builder /build/sbin/xinetd /sbin/xinetd
 ADD rootfs /
 
-# s6-overlay entrypoint
-ENTRYPOINT ["/init"]
+# s6-overlay configuration
+ENV S6_KILL_GRACETIME=6000
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1
