@@ -1,2 +1,2 @@
-#!/usr/bin/with-contenv bash
-exec /usr/sbin/xinetd -dontfork -stayalive -filelog /var/log/xinetd.log
+#!/usr/bin/with-contenv sh
+exec /sbin/xinetd -dontfork -stayalive -filelog /var/log/xinetd.log
