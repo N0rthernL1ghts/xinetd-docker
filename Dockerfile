@@ -13,11 +13,13 @@ RUN mkdir /build -p \
     && automake \
     && ./configure --prefix /build \
     && make \
-    && make install
+    && make install \
+    && rm /build/share -rf \
+    && rm /build/etc/xinetd.d/*
 
 FROM nlss/base-alpine:3.12 AS xinetd
 
-COPY --from=builder /build/sbin/xinetd /sbin/xinetd
+COPY --from=builder /build /
 ADD rootfs /
 
 # s6-overlay configuration
