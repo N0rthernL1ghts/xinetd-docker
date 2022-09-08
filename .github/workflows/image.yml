@@ -29,11 +29,27 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
-        name: Build and push
+        name: Build and push Alpine based image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: nlss/xinetd:latest
+          tags: |
+            nlss/xinetd:latest
+            nlss/xinetd:alpine
+            nlss/xinetd:alpine-latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      -
+        name: Build and push Debian based image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: Dockerfile.debian
+          push: true
+          tags: |
+            nlss/xinetd:debian
+            nlss/xinetd:debian-latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
