@@ -21,6 +21,7 @@ COPY --from=rootfs ["/", "/"]
 ENV S6_KEEP_ENV=1
 ENV S6_KILL_GRACETIME=6000
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+ENV XINETD_PATH="/usr/sbin/xinetd"
 
 # s6-overlay entrypoint
 ENTRYPOINT ["/init"]

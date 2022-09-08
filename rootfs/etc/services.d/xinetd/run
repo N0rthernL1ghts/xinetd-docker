@@ -1,2 +1,2 @@
 #!/usr/bin/with-contenv sh
-exec /usr/sbin/xinetd -dontfork -stayalive -filelog /var/log/xinetd.log
+exec "${XINETD_PATH:?}" -dontfork -stayalive -filelog /var/log/xinetd.log

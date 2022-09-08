@@ -35,3 +35,4 @@ COPY --from=rootfs ["/", "/"]
 # s6-overlay configuration
 ENV S6_KILL_GRACETIME=6000
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+ENV XINETD_PATH="/sbin/xinetd"
