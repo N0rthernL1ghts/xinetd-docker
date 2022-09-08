@@ -6,6 +6,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    assignees:
+      - "xZero707"
 
    # Maintain Docker image dependencies
   - package-ecosystem: "docker"
