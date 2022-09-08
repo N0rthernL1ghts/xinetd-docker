@@ -1,4 +1,5 @@
-FROM alpine:3.12 AS builder
+ARG ALPINE_VERSION="3.12"
+FROM alpine:${ALPINE_VERSION} AS builder
 
 ARG XINETD_VERSION="2.3.15.4"
 ARG XINETD_RELEASE_DL="https://github.com/openSUSE/xinetd/releases/download/${XINETD_VERSION}/xinetd-${XINETD_VERSION}.tar.xz"
@@ -17,7 +18,10 @@ RUN mkdir /build -p \
     && rm /build/share -rf \
     && rm /build/etc/xinetd.d/*
 
-FROM nlss/base-alpine:3.12 AS xinetd
+
+
+ARG ALPINE_VERSION
+FROM nlss/base-alpine:${ALPINE_VERSION} AS xinetd
 
 COPY --from=builder /build /
 ADD rootfs /
