@@ -20,11 +20,17 @@ RUN mkdir /build -p \
 
 
 
+FROM scratch AS rootfs
+
+COPY --from=builder ["/build", "/"]
+COPY ["./rootfs", "/"]
+
+
+
 ARG ALPINE_VERSION
 FROM nlss/base-alpine:${ALPINE_VERSION} AS xinetd
 
-COPY --from=builder /build /
-ADD rootfs /
+COPY --from=rootfs ["/", "/"]
 
 # s6-overlay configuration
 ENV S6_KILL_GRACETIME=6000
