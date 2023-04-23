@@ -6,7 +6,7 @@ COPY ["./rootfs", "/"]
 COPY --from=nlss/s6-rootfs:2.2 ["/", "/"]
 
 
-FROM debian:stable-slim AS xinetd
+FROM --platform=${TARGETPLATFORM} debian:stable-slim AS xinetd
 
 RUN set -eux \
     && export DEBIAN_FRONTEND=noninteractive \
@@ -22,6 +22,12 @@ ENV S6_KEEP_ENV=1
 ENV S6_KILL_GRACETIME=6000
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1
 ENV XINETD_PATH="/usr/sbin/xinetd"
+
+LABEL maintainer="Aleksandar Puharic <aleksandar@puharic.com>" \
+      org.opencontainers.image.source="https://github.com/N0rthernL1ghts/xinetd-docker" \
+      org.opencontainers.image.description="xinetd ${XINETD_VERSION} / Debian - Build ${TARGETPLATFORM}" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.version="${XINETD_VERSION}-debian"
 
 # s6-overlay entrypoint
 ENTRYPOINT ["/init"]
