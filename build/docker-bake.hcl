@@ -33,7 +33,7 @@ variable "REGISTRY_CACHE" {
 
 # Get the arguments for the build
 function "get-args" {
-  params = [alpine_version, xinetd_version]
+  params = [xinetd_version, alpine_version]
   result = {
     ALPINE_VERSION = alpine_version
     XINETD_VERSION = xinetd_version
