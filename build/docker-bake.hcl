@@ -53,7 +53,6 @@ function "get-cache-from" {
 function "get-cache-to" {
   params = [version]
   result = [
-    "type=gha,mode=max,scope=${version}_${BAKE_LOCAL_PLATFORM}",
     "type=registry,mode=max,ref=${REGISTRY_CACHE}:${sha1("${version}-${BAKE_LOCAL_PLATFORM}")}"
   ]
 }
