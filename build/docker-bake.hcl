@@ -104,7 +104,7 @@ target "2_3_15_4_alpine3_17" {
   args       = get-args("2.3.15.4", "3.17")
 }
 
-# Version might differ depending of package "xinetd" in Debian-slim
+# Version might differ depending of package "xinetd" in Debian
 target "2_3_15_4_debian" {
   inherits   = ["build-dockerfile", "build-platforms", "build-common"]
   dockerfile = "Dockerfile.debian"
