@@ -6,7 +6,9 @@ main() {
     # This will prepend service name to all output from here
     exec > >(while read line; do echo "[init-xinetd-log-perms] ${line}"; done) 2>&1
 
-    touch /var/log/xinetd.log
-    lsiown -R abc:abc /var/log/xinetd.log
+    mkdir -p /config/logs/
+
+    touch /config/logs/xinetd.log
+    lsiown -R abc:abc /config/logs/
 }
 main
