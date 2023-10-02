@@ -4,7 +4,7 @@ COPY ["./rootfs", "/"]
 
 
 
-FROM --platform=${TARGETPLATFORM} ghcr.io/linuxserver/baseimage-debian:bookworm AS xinetd
+FROM --platform=${TARGETPLATFORM} lscr.io/linuxserver/baseimage-debian:bookworm AS xinetd
 
 RUN set -eux \
     && export DEBIAN_FRONTEND=noninteractive \

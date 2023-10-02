@@ -1,5 +1,5 @@
 ARG ALPINE_VERSION="3.15"
-FROM --platform=${TARGETPLATFORM} ghcr.io/linuxserver/baseimage-alpine:${ALPINE_VERSION} AS builder
+FROM --platform=${TARGETPLATFORM} lscr.io/linuxserver/baseimage-alpine:${ALPINE_VERSION} AS builder
 
 ARG XINETD_VERSION="2.3.15.4"
 ARG XINETD_RELEASE_DL="https://github.com/openSUSE/xinetd/releases/download/${XINETD_VERSION}/xinetd-${XINETD_VERSION}.tar.xz"
@@ -28,7 +28,7 @@ COPY ["./rootfs", "/"]
 
 
 ARG ALPINE_VERSION
-FROM --platform=${TARGETPLATFORM} ghcr.io/linuxserver/baseimage-alpine:${ALPINE_VERSION} AS xinetd
+FROM --platform=${TARGETPLATFORM} lscr.io/linuxserver/baseimage-alpine:${ALPINE_VERSION} AS xinetd
 
 COPY --from=rootfs ["/", "/"]
 
