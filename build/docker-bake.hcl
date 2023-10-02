@@ -1,8 +1,8 @@
 group "default" {
   targets = [
-    "2_3_15_4_alpine3_15",
     "2_3_15_4_alpine3_16",
     "2_3_15_4_alpine3_17",
+    "2_3_15_4_alpine3_18",
     "2_3_15_4_debian"
   ]
 }
@@ -80,14 +80,6 @@ function "get-tags" {
 # Define the build targets
 ##########################
 
-target "2_3_15_4_alpine3_15" {
-  inherits   = ["build-dockerfile", "build-platforms", "build-common"]
-  cache-from = get-cache-from("2.3.15.4-alpine3.15")
-  cache-to   = get-cache-to("2.3.15.4-alpine3.15")
-  tags       = get-tags("2.3.15.4-alpine3.15", ["alpine3.15"])
-  args       = get-args("2.3.15.4", "3.15")
-}
-
 target "2_3_15_4_alpine3_16" {
   inherits   = ["build-dockerfile", "build-platforms", "build-common"]
   cache-from = get-cache-from("2.3.15.4-alpine3.16")
@@ -100,8 +92,16 @@ target "2_3_15_4_alpine3_17" {
   inherits   = ["build-dockerfile", "build-platforms", "build-common"]
   cache-from = get-cache-from("2.3.15.4-alpine3.17")
   cache-to   = get-cache-to("2.3.15.4-alpine3.17")
-  tags       = get-tags("2.3.15.4-alpine3.17", ["alpine", "alpine3.17", "latest", "2.3", "2"])
+  tags       = get-tags("2.3.15.4-alpine3.17", ["alpine3.17"])
   args       = get-args("2.3.15.4", "3.17")
+}
+
+target "2_3_15_4_alpine3_18" {
+  inherits   = ["build-dockerfile", "build-platforms", "build-common"]
+  cache-from = get-cache-from("2.3.15.4-alpine3.18")
+  cache-to   = get-cache-to("2.3.15.4-alpine3.18")
+  tags       = get-tags("2.3.15.4-alpine3.18", ["alpine", "alpine3.18", "latest", "2.3", "2"])
+  args       = get-args("2.3.15.4", "3.18")
 }
 
 # Version might differ depending of package "xinetd" in Debian
@@ -112,4 +112,3 @@ target "2_3_15_4_debian" {
   cache-to   = get-cache-to("2.3.15.4")
   tags       = get-tags("2.3.15.4-debian", ["debian", "2.3-debian", "2-debian"])
 }
-
